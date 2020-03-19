@@ -165,7 +165,7 @@ func main() {
 					loggers.Set(false, o.ChildOrderAcceptanceId)
 
 				case termbox.KeyCtrlS: // Ctrl+Sキー: SFD売り指値
-					sfdASK := math.Ceil(p.SE.LTP() * 1.05)
+					sfdASK := math.Ceil(c.SE.LTP() * 1.05)
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
@@ -182,7 +182,7 @@ func main() {
 					loggers.Set(false, o.ChildOrderAcceptanceId)
 
 				case termbox.KeyCtrlA: // Ctrl+Aキー: SFD買い戻し
-					sfdBID := math.Floor(p.SE.LTP() * 1.05)
+					sfdBID := math.Floor(c.SE.LTP() * 1.05)
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
