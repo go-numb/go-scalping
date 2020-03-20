@@ -68,8 +68,8 @@ func main() {
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.MARKET,
-						types.BUY,
 						types.GTC,
+						types.BUY,
 						0,
 						size,
 						expire,
@@ -84,8 +84,8 @@ func main() {
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.MARKET,
-						types.SELL,
 						types.GTC,
+						types.SELL,
 						0,
 						size,
 						expire,
@@ -101,8 +101,8 @@ func main() {
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
-						types.BUY,
 						types.GTC,
+						types.BUY,
 						bestbid,
 						size,
 						expire,
@@ -118,8 +118,8 @@ func main() {
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
-						types.SELL,
 						types.GTC,
+						types.SELL,
 						bestask,
 						size,
 						expire,
@@ -135,8 +135,8 @@ func main() {
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
-						types.BUY,
 						types.GTC,
+						types.BUY,
 						bestbid-diff,
 						size,
 						expire,
@@ -152,8 +152,8 @@ func main() {
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
-						types.SELL,
 						types.GTC,
+						types.SELL,
 						bestask+diff,
 						size,
 						expire,
@@ -169,8 +169,8 @@ func main() {
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
-						types.SELL,
 						types.GTC,
+						types.SELL,
 						sfdASK,
 						size,
 						expire,
@@ -186,8 +186,8 @@ func main() {
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
-						types.SELL,
 						types.IOC,
+						types.SELL,
 						sfdBID,
 						size,
 						expire,
