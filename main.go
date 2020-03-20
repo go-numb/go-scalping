@@ -214,7 +214,7 @@ func main() {
 					loggers.Set(false, fmt.Sprintf("trade limit diff down: ¥%.f", diff))
 
 				case termbox.KeyCtrlR:
-					_, _, sum := c.FO.Positions.Sum()
+					_, _, sum := c.O.Positions.Sum()
 					way := types.BUY
 					if -0.01 < sum && sum < 0.01 {
 						continue
@@ -284,11 +284,13 @@ func main() {
 					c.SE.LTP(), c.FE.LTP(),
 					c.SE.Spread(), c.FE.Spread(),
 					volS, volF)
-				_, _, sum := c.FO.Positions.Sum()
+				_, _, onboard := c.O.Orders.Sum()
+				_, _, sum := c.O.Positions.Sum()
 				printf(0, 2,
 					termbox.ColorWhite,
 					termbox.ColorBlack,
-					"has size: %.2f, SFD: %f％,	delay: %.3f / %.3f sec",
+					"onboard: %.2f,	has size: %.2f, SFD: %f％,	delay: %.3f / %.3f sec",
+					onboard,
 					sum,
 					(c.SFD.Ratio()-1)*100,
 					c.SE.Delay().Seconds(),

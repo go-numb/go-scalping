@@ -2,6 +2,7 @@ package bitflyer
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"sync"
@@ -22,10 +23,10 @@ type Client struct {
 	SFD *SFDer
 
 	SE *executions.Execution
-	SO *orders.Managed
 
 	FE *executions.Execution
-	FO *orders.Managed
+
+	O *orders.Managed
 
 	MA movavg.Multi
 }
@@ -43,9 +44,9 @@ func New() *Client {
 		SFD: new(SFDer),
 
 		SE: executions.New(),
-		SO: orders.New(),
 		FE: executions.New(),
-		FO: orders.New(),
+
+		O: orders.New(),
 
 		MA: movavg.Multi{
 			movavg.NewSMA(9),
@@ -67,7 +68,7 @@ func (p *Client) Connect(ctx context.Context, l *log.Logger) {
 	go jsonrpc.Connect(ctx, ch, channels, symbols, l)
 
 	channels = []string{
-		"lightning_ticker_FX_BTC_JPY",
+		// "lightning_ticker_FX_BTC_JPY",
 		"child_order_events",
 	}
 	go jsonrpc.ConnectForPrivate(ctx, ch, p.C.Config().Key, p.C.Config().Secret, channels, l)
@@ -75,26 +76,28 @@ func (p *Client) Connect(ctx context.Context, l *log.Logger) {
 	for {
 		select {
 		case v := <-ch:
-			switch v.ProductCode {
-			case types.BTCJPY:
+			if v.Types == jsonrpc.ChildOrders {
+				fmt.Printf("%d	-	%+v\n", v.Types, v.ProductCode)
+			}
+
+			switch {
+			case v.ProductCode == types.BTCJPY:
 				switch v.Types {
 				case jsonrpc.Executions:
 					p.SE.Set(v.Executions)
 					p.SFD.Culc(p.SE.LTP(), p.FE.LTP())
-
-				case jsonrpc.ChildOrders:
-					p.SO.Switch(v.ChildOrderEvents)
 				}
 
-			case types.FXBTCJPY:
+			case v.ProductCode == types.FXBTCJPY:
 				switch v.Types {
 				case jsonrpc.Executions:
 					p.FE.Set(v.Executions)
 					p.SFD.Culc(p.SE.LTP(), p.FE.LTP())
-
-				case jsonrpc.ChildOrders:
-					p.FO.Switch(v.ChildOrderEvents)
 				}
+
+			case v.Types == jsonrpc.ChildOrders:
+				p.O.Switch(v.ChildOrderEvents)
+
 			}
 		}
 	}
