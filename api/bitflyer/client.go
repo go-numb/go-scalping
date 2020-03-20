@@ -2,7 +2,6 @@ package bitflyer
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
 	"sync"
@@ -76,10 +75,6 @@ func (p *Client) Connect(ctx context.Context, l *log.Logger) {
 	for {
 		select {
 		case v := <-ch:
-			if v.Types == jsonrpc.ChildOrders {
-				fmt.Printf("%d	-	%+v\n", v.Types, v.ProductCode)
-			}
-
 			switch {
 			case v.ProductCode == types.BTCJPY:
 				switch v.Types {
