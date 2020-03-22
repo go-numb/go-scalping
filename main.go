@@ -227,7 +227,7 @@ func main() {
 						way,
 						types.GTC,
 						0,
-						sum,
+						types.ToSize(sum),
 						expire,
 					))
 					if err != nil {
