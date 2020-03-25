@@ -67,7 +67,7 @@ func (p *Client) Connect(ctx context.Context, l *log.Logger) {
 	go jsonrpc.Connect(ctx, ch, channels, symbols, l)
 
 	channels = []string{
-		// "lightning_ticker_FX_BTC_JPY",
+		"lightning_ticker_FX_BTC_JPY",
 		"child_order_events",
 	}
 	go jsonrpc.ConnectForPrivate(ctx, ch, p.C.Config().Key, p.C.Config().Secret, channels, l)
