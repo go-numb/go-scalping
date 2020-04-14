@@ -98,6 +98,9 @@ func main() {
 
 				case termbox.KeyArrowUp: // ↑キー: BestBid買い
 					_, bestbid := c.FE.Best()
+					if code == string(types.BTCJPY) {
+						_, bestbid = c.SE.Best()
+					}
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
@@ -115,6 +118,9 @@ func main() {
 
 				case termbox.KeyArrowDown: // ↓キー: BestAsk売り
 					bestask, _ := c.FE.Best()
+					if code == string(types.BTCJPY) {
+						_, bestask = c.SE.Best()
+					}
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
@@ -132,6 +138,9 @@ func main() {
 
 				case termbox.KeyArrowRight: // →キー: -0.0x%指値買い
 					_, bestbid := c.FE.Best()
+					if code == string(types.BTCJPY) {
+						_, bestbid = c.SE.Best()
+					}
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
@@ -149,6 +158,9 @@ func main() {
 
 				case termbox.KeyArrowLeft: // ←キー: +0.0x%指値売り
 					bestask, _ := c.FE.Best()
+					if code == string(types.BTCJPY) {
+						_, bestask = c.SE.Best()
+					}
 					o, err := c.C.ChildOrder(orders.NewForChildOrder(
 						types.ProductCode(code),
 						types.LIMIT,
